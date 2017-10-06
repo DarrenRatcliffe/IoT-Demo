@@ -879,7 +879,7 @@ objects:
         from:
           kind: ImageStreamTag
           name: jboss-datagrid65-openshift:1.4
-          namespace: openshift
+          namespace: redhat-iot
       type: ImageChange
     - type: ConfigChange
   status: {}
