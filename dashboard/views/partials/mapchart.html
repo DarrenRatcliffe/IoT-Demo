@@ -1,0 +1,31 @@
+<!--
+    Copyright (c) 2017 Red Hat, Inc. and others
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+
+    Contributors:
+        Red Hat Inc. - initial implementation
+
+-->
+<div map-lazy-load="https://maps.google.com/maps/api/js" map-lazy-load-params="{{mapsUrl}}" id="shipmentmap">
+
+    <h2>Vehicle Tracking</h2>
+    <hr>
+    <ng-map zoom="12" center="Boston, MA" pan-control="false"
+                    zoom-control="false" scale-control="false" street-view-control="false">
+                <directions
+                        draggable="true"
+                        travel-mode="DRIVING"
+                        origin=""
+                        destination="">
+                </directions>
+
+                <marker id="cp" position="Boston, MA" animation="Animation.DROP" centered="true"></marker>
+
+
+            </ng-map>
+
+    </div>

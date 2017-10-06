@@ -1,0 +1,81 @@
+<!--
+    Copyright (c) 2017 Red Hat, Inc. and others
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+
+    Contributors:
+        Red Hat Inc. - initial implementation
+
+ -->
+<div id="shiplist">
+
+    <h2>Client Shipments</h2>
+    <hr>
+
+    <div ng-if="!shipments">
+        <icon class="fa fa-info-circle"></icon>
+        &nbsp;Choose a vehicle to view its packages
+    </div>
+
+    <div ng-if="shipments.length <= 0">
+        No Shipments found for vehicle <em>{{selectedVehicle.desc}}</em>. Try picking a different Vehicle.
+    </div>
+
+    <div ng-if="shipments.length > 0">
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-search"></i>
+                    </div>
+                    <input ng-model="shipQuery" type="text" placeholder="Find..." autofocus>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <scrollable-table ng-if="shipments.length > 0" watch="shipments">
+
+        <table  class="table table-fixed table-striped table-bordered table-hover" id="myShipTable">
+            <thead>
+            <tr>
+                <th sortable-header col="customer.name">Client Package</th>
+                <th>Route</th>
+                <th>ETA</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+
+          <tbody>
+
+            <tr ng-class="{ active: isSelected(shipment)}" ng-click="selectShipment(shipment);"
+                ng-repeat="shipment in shipments | filter:shipQuery track by shipment.sensor_id"
+                row-id="{{shipment.customer.name}} ({{shipment.desc}}">
+                <td data-toggle="tooltip" data-placement="right" title="{{shipment.customer.name}}">
+                    {{shipment.customer.name}} ({{shipment.desc}})
+                </td>
+
+
+                <td><icon class="fa fa-arrow-circle-right"></icon>&nbsp;<a target="_blank"
+                                                                           href="http://maps.google.com/?q={{shipment.route[0].address}}">{{shipment.route[0].address}}</a><br>
+                    <icon class="fa fa-flag-checkered"></icon>&nbsp;<a target="_blank"
+                                                                       href="http://maps.google.com/?q={{shipment.route[shipment.route.length-1].address}}">{{shipment.route[shipment.route.length-1].address}}</a>
+                </td>
+
+
+                <td>{{shipment.eta | amCalendar:referenceTime:formats}}</td>
+                <td><center>
+                    <icon ng-if="shipment.status == 'ok'" class="pficon fa-2x pficon-ok"></icon>
+                    <icon ng-if="shipment.status != 'ok'" title="Package sensor {{shipment.status}} detected; vehicle operator notified" class="pficon fa-2x pficon-warning-triangle-o"></icon>
+                </center></td>
+
+            </tr>
+        </tbody>
+        </table>
+    </scrollable-table>
+
+</div>
+
+

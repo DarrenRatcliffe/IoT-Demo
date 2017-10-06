@@ -1,0 +1,35 @@
+<!--
+    Copyright (c) 2017 Red Hat, Inc. and others
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+
+    Contributors:
+        Red Hat Inc. - initial implementation
+
+ -->
+<div class="p-t-10 container-fluid">
+
+    <h2>Vehicle Telemetry<span ng-if="selectedVehicle && selectedVehicle.status != 'ok'">&nbsp;<icon class="pficon pficon-warning-triangle-o"></icon></span></h2>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+                <img class="img-responsive center-block" ng-src="/app/imgs/truck-{{truckImageType}}.png" alt="Truck" />
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div ng-repeat="telemetry in selectedVehicle.telemetry track by $index">
+            <div class="col-md-4">
+                <h2 style="text-align: center;">{{telemetry.name}}</h2>
+                <hr style="margin-top: 2px; margin-bottom: 2px;">
+                <div class="center-block" pf-donut-pct-chart config="config[telemetry.name]" data="data[telemetry.name]" center-label="noLabel" chart-height="150">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
